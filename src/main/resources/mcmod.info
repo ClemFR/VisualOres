@@ -5,8 +5,8 @@
     "version": "${version}",
     "mcversion": "${mcversion}",
     "logoFile": "",
-    "url": "https://github.com/kumquat-ir/VisualOres",
-    "authorList": ["TheLastKumquat", "SinTh0r4s"],
+    "url": "https://github.com/ClemFR/VisualOres",
+    "authorList": ["TheLastKumquat", "SinTh0r4s", "Alphaline_"],
     "credits": "",
     "dependencies": []
 }]
