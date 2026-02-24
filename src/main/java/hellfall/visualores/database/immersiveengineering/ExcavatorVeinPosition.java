@@ -47,6 +47,8 @@ public class ExcavatorVeinPosition {
         timestamp = nbt.getLong("timestamp");
         if (nbt.hasKey("mineral")) {
             mineral = nbt.getString("mineral");
+            int hash = mineral.hashCode();
+            color = 0xFF000000 + (hash & 0x00FFFFFF);
         }
         if (nbt.hasKey("depletion")) {
             depletion = nbt.getInteger("depletion");
