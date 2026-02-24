@@ -9,21 +9,21 @@ import net.minecraft.util.math.ChunkPos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExcavatorRenderLayer extends RenderLayer {
+public class ExcavatorFluidRenderLayer extends RenderLayer {
     private List<ExcavatorVeinPosition> visibleVeins = new ArrayList<>();
     private ExcavatorVeinPosition hoveredVein;
     private static ExcavatorVeinPosition waypointVein;
 
-    public ExcavatorRenderLayer(String key) {
+    public ExcavatorFluidRenderLayer(String key) {
         super(key);
     }
 
     @Override
     public void render(double cameraX, double cameraZ, double scale) {
         for (ExcavatorVeinPosition vein : visibleVeins) {
-            int sideColor = vein.veinOreColor & 0xDDFFFFFF;
+            int sideColor = vein.veinFluidColor & 0xDDFFFFFF;
             if (vein == waypointVein) sideColor = 0xFFFFD700;
-            DrawUtils.drawOverlayBox(vein.x, vein.z, sideColor, vein.veinOreColor & 0x77FFFFFF);
+            DrawUtils.drawOverlayBox(vein.x, vein.z, sideColor, vein.veinFluidColor & 0x77FFFFFF);
         }
     }
 

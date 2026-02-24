@@ -27,7 +27,8 @@ public class ExcavatorVeinPosition {
     public String resType;
     public Integer oil;
 
-    public int color;
+    public int veinOreColor;
+    public int veinFluidColor;
 
     private List<String> tooltip;
     private ItemStack cachedStack;
@@ -39,7 +40,9 @@ public class ExcavatorVeinPosition {
         }
 
         cachedStack = stack;
-        color = 0xFFFFFFFF;
+        veinOreColor = 0;
+        veinFluidColor = 0;
+
         int[] coords = nbt.getIntArray("coords");
         x = coords[1];
         z = coords[2];
@@ -48,7 +51,7 @@ public class ExcavatorVeinPosition {
         if (nbt.hasKey("mineral")) {
             mineral = nbt.getString("mineral");
             int hash = mineral.hashCode();
-            color = 0xFF000000 + (hash & 0x00FFFFFF);
+            veinOreColor = 0xFF000000 + (hash & 0x00FFFFFF);
         }
         if (nbt.hasKey("depletion")) {
             depletion = nbt.getInteger("depletion");
@@ -59,7 +62,7 @@ public class ExcavatorVeinPosition {
         if (nbt.hasKey("resType")) {
             resType = nbt.getString("resType");
             if (Loader.isModLoaded("immersivepetroleum")) {
-                color = DrawUtils.getFluidColor(getIPFluid(resType));
+                veinFluidColor = DrawUtils.getFluidColor(getIPFluid(resType));
             }
         }
         if (nbt.hasKey("oil")) {

@@ -1,6 +1,7 @@
 visualores.button.oreveins=Toggle ore vein display
 visualores.button.undergroundfluid=Toggle underground fluid display
-visualores.button.excavator=Toggle excavator vein display
+visualores.button.excavator=Toggle excavator ore vein display
+visualores.button.excavator_fluid=Toggle excavator fluid vein display
 visualores.button.aura_flux=Toggle aura/flux display
 visualores.button.starlight=Toggle starlight level display
 visualores.button.neromantic=Toggle Neromantic Prime fluid display

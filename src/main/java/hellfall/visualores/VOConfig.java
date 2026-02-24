@@ -39,6 +39,7 @@ public class VOConfig {
         public String[] buttonOrder = new String[]{
                 "oreveins",
                 "excavator",
+                "excavator_fluid",
                 "undergroundfluid",
                 "neromantic",
                 "aura_flux",

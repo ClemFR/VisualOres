@@ -15,6 +15,7 @@ import hellfall.visualores.map.journeymap.JourneymapWaypointHandler;
 import hellfall.visualores.map.layers.Layers;
 import hellfall.visualores.map.layers.astralsorcery.NeromanticRenderLayer;
 import hellfall.visualores.map.layers.astralsorcery.StarfieldRenderLayer;
+import hellfall.visualores.map.layers.immersiveengineering.ExcavatorFluidRenderLayer;
 import hellfall.visualores.map.layers.immersiveengineering.ExcavatorRenderLayer;
 import hellfall.visualores.map.layers.thaumcraft.AuraFluxRenderLayer;
 import hellfall.visualores.map.xaero.XaeroWaypointHandler;
@@ -66,6 +67,7 @@ public class VOClientProxy extends VOCommonProxy {
         }
         if (Loader.isModLoaded("immersiveengineering")) {
             Layers.registerLayer(ExcavatorRenderLayer.class, "excavator");
+            Layers.registerLayer(ExcavatorFluidRenderLayer.class, "excavator_fluid");
             ClientCacheManager.registerClientCache(IEClientCache.instance, "immeng");
         }
     }
