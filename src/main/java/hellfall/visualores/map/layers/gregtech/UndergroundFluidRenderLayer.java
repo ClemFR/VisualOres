@@ -1,6 +1,8 @@
 package hellfall.visualores.map.layers.gregtech;
 
+import com.google.common.collect.Lists;
 import gregtech.api.worldgen.bedrockFluids.BedrockFluidVeinHandler;
+import hellfall.visualores.commands.CommandFilterOverlayText;
 import hellfall.visualores.database.gregtech.GTClientCache;
 import hellfall.visualores.database.gregtech.fluid.UndergroundFluidPosition;
 import hellfall.visualores.map.DrawUtils;
@@ -23,15 +25,17 @@ public class UndergroundFluidRenderLayer extends RenderLayer {
     @Override
     public void render(double cameraX, double cameraZ, double scale) {
         for (var fluidPos : visibleFluids) {
-            int sideColor = (fluidPos.color & 0x00FFFFFF) + 0xDD000000;
-            int midColor = (fluidPos.color & 0x00FFFFFF) + 0x77000000;
+            if (CommandFilterOverlayText.isFiltered(Lists.newArrayList(fluidPos.name, Integer.toString(fluidPos.yield), Double.toString(fluidPos.percent)))) {
+                int sideColor = (fluidPos.color & 0x00FFFFFF) + 0xDD000000;
+                int midColor = (fluidPos.color & 0x00FFFFFF) + 0x77000000;
 
-            int t = adjustForBadCoords(fluidPos.pos.z * BedrockFluidVeinHandler.VEIN_CHUNK_SIZE) * 16;
-            int b = adjustForBadCoords((fluidPos.pos.z + 1) * BedrockFluidVeinHandler.VEIN_CHUNK_SIZE) * 16;
-            int l = adjustForBadCoords(fluidPos.pos.x * BedrockFluidVeinHandler.VEIN_CHUNK_SIZE) * 16;
-            int r = adjustForBadCoords((fluidPos.pos.x + 1) * BedrockFluidVeinHandler.VEIN_CHUNK_SIZE) * 16;
+                int t = adjustForBadCoords(fluidPos.pos.z * BedrockFluidVeinHandler.VEIN_CHUNK_SIZE) * 16;
+                int b = adjustForBadCoords((fluidPos.pos.z + 1) * BedrockFluidVeinHandler.VEIN_CHUNK_SIZE) * 16;
+                int l = adjustForBadCoords(fluidPos.pos.x * BedrockFluidVeinHandler.VEIN_CHUNK_SIZE) * 16;
+                int r = adjustForBadCoords((fluidPos.pos.x + 1) * BedrockFluidVeinHandler.VEIN_CHUNK_SIZE) * 16;
 
-            DrawUtils.drawOverlayBox(l, t, r, b, sideColor, midColor);
+                DrawUtils.drawOverlayBox(l, t, r, b, sideColor, midColor);
+            }
         }
     }
 
@@ -49,7 +53,7 @@ public class UndergroundFluidRenderLayer extends RenderLayer {
 
         hovered = null;
         for (var fluidPos : visibleFluids) {
-            if (mouseFieldX == fluidPos.pos.x && mouseFieldZ == fluidPos.pos.z) {
+            if (mouseFieldX == fluidPos.pos.x && mouseFieldZ == fluidPos.pos.z && CommandFilterOverlayText.isFiltered(Lists.newArrayList(fluidPos.name, Integer.toString(fluidPos.yield), Double.toString(fluidPos.percent)))) {
                 hovered = fluidPos;
                 break;
             }

@@ -13,6 +13,7 @@ public class VOClientCommand extends CommandTreeBase {
         addSubcommand(new CommandShareProspectingData());
         addSubcommand(new CommandOpenCacheFolder());
         addSubcommand(new CommandResetClientCache());
+        addSubcommand(new CommandFilterOverlayText());
     }
 
     @Override
@@ -27,6 +28,6 @@ public class VOClientCommand extends CommandTreeBase {
 
     @Override
     public @Nonnull String getUsage(@Nonnull ICommandSender sender) {
-        return "/vo <share/openCacheFolder/resetClientCache>";
+        return "/vo <share/openCacheFolder/resetClientCache/filter>";
     }
 }

@@ -1,5 +1,6 @@
 package hellfall.visualores.map.layers.astralsorcery;
 
+import hellfall.visualores.commands.CommandFilterOverlayText;
 import hellfall.visualores.database.astralsorcery.ASClientCache;
 import hellfall.visualores.database.astralsorcery.NeromanticPosition;
 import hellfall.visualores.map.DrawUtils;
@@ -23,7 +24,9 @@ public class NeromanticRenderLayer extends RenderLayer {
             int sideColor = (vein.color & 0x00FFFFFF) + 0xDD000000;
             int midColor = (vein.color & 0x00FFFFFF) + 0x77000000;
 
-            DrawUtils.drawOverlayBox(vein.x, vein.z, sideColor, midColor);
+            if (CommandFilterOverlayText.isFiltered(vein.tooltip)) {
+                DrawUtils.drawOverlayBox(vein.x, vein.z, sideColor, midColor);
+            }
         }
     }
 
@@ -37,7 +40,7 @@ public class NeromanticRenderLayer extends RenderLayer {
         ChunkPos mousePos = new ChunkPos(DrawUtils.getMouseBlockPos(mouseX, mouseY, cameraX, cameraZ, scale));
         hoveredChunk = null;
         for (NeromanticPosition vein : visibleChunks) {
-            if (vein.x == mousePos.x && vein.z == mousePos.z) {
+            if (vein.x == mousePos.x && vein.z == mousePos.z && CommandFilterOverlayText.isFiltered(vein.tooltip)) {
                 hoveredChunk = vein;
                 break;
             }

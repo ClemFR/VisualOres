@@ -1,5 +1,6 @@
 package hellfall.visualores.map.layers.immersiveengineering;
 
+import hellfall.visualores.commands.CommandFilterOverlayText;
 import hellfall.visualores.database.immersiveengineering.ExcavatorVeinPosition;
 import hellfall.visualores.database.immersiveengineering.IEClientCache;
 import hellfall.visualores.map.DrawUtils;
@@ -21,9 +22,11 @@ public class ExcavatorRenderLayer extends RenderLayer {
     @Override
     public void render(double cameraX, double cameraZ, double scale) {
         for (ExcavatorVeinPosition vein : visibleVeins) {
-            int sideColor = vein.veinOreColor & 0xDDFFFFFF;
-            if (vein == waypointVein) sideColor = 0xFFFFD700;
-            DrawUtils.drawOverlayBox(vein.x, vein.z, sideColor, vein.veinOreColor & 0x77FFFFFF);
+            if (CommandFilterOverlayText.isFiltered(vein.getTooltip())) {
+                int sideColor = vein.veinOreColor & 0xDDFFFFFF;
+                if (vein == waypointVein) sideColor = 0xFFFFD700;
+                DrawUtils.drawOverlayBox(vein.x, vein.z, sideColor, vein.veinOreColor & 0x77FFFFFF);
+            }
         }
     }
 
@@ -37,7 +40,7 @@ public class ExcavatorRenderLayer extends RenderLayer {
         ChunkPos mousePos = new ChunkPos(DrawUtils.getMouseBlockPos(mouseX, mouseY, cameraX, cameraZ, scale));
         hoveredVein = null;
         for (ExcavatorVeinPosition vein : visibleVeins) {
-            if (vein.x == mousePos.x && vein.z == mousePos.z) {
+            if (vein.x == mousePos.x && vein.z == mousePos.z && CommandFilterOverlayText.isFiltered(vein.getTooltip())) {
                 hoveredVein = vein;
                 break;
             }

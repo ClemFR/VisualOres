@@ -1,5 +1,6 @@
 package hellfall.visualores.map.layers.thaumcraft;
 
+import hellfall.visualores.commands.CommandFilterOverlayText;
 import hellfall.visualores.database.thaumcraft.AuraFluxPosition;
 import hellfall.visualores.database.thaumcraft.TCClientCache;
 import hellfall.visualores.map.DrawUtils;
@@ -20,7 +21,9 @@ public class AuraFluxRenderLayer extends RenderLayer {
     @Override
     public void render(double cameraX, double cameraZ, double scale) {
         for (AuraFluxPosition chunk : visibleChunks) {
-            DrawUtils.drawOverlayBox(chunk.x, chunk.z, chunk.color, chunk.midColor);
+            if (CommandFilterOverlayText.isFiltered(chunk.tooltips)) {
+                DrawUtils.drawOverlayBox(chunk.x, chunk.z, chunk.color, chunk.midColor);
+            }
         }
     }
 
@@ -34,7 +37,7 @@ public class AuraFluxRenderLayer extends RenderLayer {
         ChunkPos mousePos = new ChunkPos(DrawUtils.getMouseBlockPos(mouseX, mouseY, cameraX, cameraZ, scale));
         hoveredChunk = null;
         for (AuraFluxPosition chunk : visibleChunks) {
-            if (chunk.x == mousePos.x && chunk.z == mousePos.z) {
+            if (chunk.x == mousePos.x && chunk.z == mousePos.z && CommandFilterOverlayText.isFiltered(chunk.tooltips)) {
                 hoveredChunk = chunk;
                 break;
             }

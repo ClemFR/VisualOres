@@ -3,6 +3,7 @@ package hellfall.visualores.map.layers.gregtech;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.lib.texture.TextureUtils;
 import hellfall.visualores.VOConfig;
+import hellfall.visualores.commands.CommandFilterOverlayText;
 import hellfall.visualores.database.gregtech.GTClientCache;
 import hellfall.visualores.database.gregtech.ore.OreVeinPosition;
 import hellfall.visualores.map.DrawUtils;
@@ -36,6 +37,10 @@ public class OreRenderLayer extends RenderLayer {
         int iconSize = VOConfig.client.gregtech.oreIconSize;
 
         for (OreVeinPosition vein : visibleVeins) {
+            if (!CommandFilterOverlayText.isFiltered(vein.veinInfo.tooltipStrings)) {
+                continue;
+            }
+
             GlStateManager.pushMatrix();
 
             // -> scale = pixels, origin = center of block vein is in
@@ -109,7 +114,7 @@ public class OreRenderLayer extends RenderLayer {
             double scaledVeinX = (vein.x + 0.5 - cameraX) * scale;
             double scaledVeinZ = (vein.z + 0.5 - cameraZ) * scale;
             if (mouseX > scaledVeinX - iconRadius && mouseX < scaledVeinX + iconRadius &&
-                    mouseY > scaledVeinZ - iconRadius && mouseY < scaledVeinZ + iconRadius) {
+                    mouseY > scaledVeinZ - iconRadius && mouseY < scaledVeinZ + iconRadius && CommandFilterOverlayText.isFiltered(vein.veinInfo.tooltipStrings)) {
                 hoveredVeins.add(vein);
             }
         }
